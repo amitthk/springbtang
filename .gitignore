@@ -1,0 +1,8 @@
+/build/
+.project
+.gradle
+.classpath
+.settings/
+/.metadata/
+.idea/
+/src/main/webapp/node_modules/
