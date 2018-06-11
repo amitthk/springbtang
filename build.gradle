@@ -1,6 +1,6 @@
 buildscript {
 	ext {
-		springBootVersion = '1.5.4.RELEASE'
+		springBootVersion = '1.5.6.RELEASE'
 	}
 	repositories {
 		mavenCentral()
@@ -14,8 +14,32 @@ apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
 
+group 'com.amitthk.springbtang'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = 1.8
+
+defaultTasks 'jar'
+
+jar {
+	from {
+		(configurations.runtime).collect {
+			it.isDirectory() ? it : zipTree(it)
+		}
+	}
+	manifest {
+		attributes 'Main-Class': 'com.amitthk.springbtang.SpringBootAngularApp'
+	}
+}
+
+springBoot{
+    executable = true
+}
+
+if (!hasProperty('mainClass')) {
+	ext.mainClass = 'com.amitthk.springbtang.SpringBootAngularApp'
+}
+
+
 
 repositories {
 	mavenCentral()
@@ -26,6 +50,7 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-web')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }
+
 
 def webappDir = "$projectDir/src/main/webapp"
 sourceSets {
